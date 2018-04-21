@@ -1,6 +1,8 @@
 ﻿namespace SpaStore.Test.Services
 {
+    using System;
     using Models;
+    using NSubstitute;
     using SpaStore.Models;
     using SpaStore.Services;
     using Xunit;
@@ -109,6 +111,34 @@
             IBasketCalculatorService calculator = new BasketCalculatorService();
 
             Assert.Equal(9m, calculator.CalculateBasketPrice(basket));
+        }
+
+        [Fact]
+        public void AddBasket_AddsTheBasketToTheCollection()
+        {
+            IBasket basket = new Basket();
+            basket.Items.Add(fakeButter);
+
+            IBasketCalculatorService calculator = new BasketCalculatorService();
+
+            Assert.Equal(0, calculator.Baskets.Count);
+
+            calculator.AddBasket(basket);
+
+            Assert.Equal(1, calculator.Baskets.Count);
+        }
+
+        [Fact]
+        public void AddBasket_AddsAnIdToTheBasket()
+        {
+            IBasket basket = new Basket();
+            basket.Items.Add(fakeButter);
+
+            IBasketCalculatorService calculator = new BasketCalculatorService();
+
+            calculator.AddBasket(basket);
+
+            Assert.IsType<Guid>(basket.Id);
         }
     }
 }

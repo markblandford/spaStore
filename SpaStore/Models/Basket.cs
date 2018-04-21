@@ -10,27 +10,13 @@
         public Basket()
         {
             Items = new List<IProduct>();
+            Guid.NewGuid();
         }
+
+        /// <inheritdoc />
+        public Guid Id { get; set; }
 
         /// <inheritdoc />
         public IList<IProduct> Items { get; }
-
-        /// <inheritdoc />
-        public bool Add()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public bool Remove()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public decimal Calculate()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
