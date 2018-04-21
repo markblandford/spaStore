@@ -13,7 +13,7 @@
         }
 
         /// <inheritdoc />
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         /// <inheritdoc />
         public IList<IProduct> Items { get; }

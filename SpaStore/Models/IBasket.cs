@@ -7,7 +7,7 @@
     public interface IBasket
     {
         /// <summary> Basket Id. </summary>
-        Guid Id { get; set; }
+        Guid? Id { get; set; }
 
         /// <summary> Items within the basket. </summary>
         IList<IProduct> Items { get; }

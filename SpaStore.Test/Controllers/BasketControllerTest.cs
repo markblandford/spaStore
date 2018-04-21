@@ -25,7 +25,15 @@
         }
 
         [Fact]
-        public void AddBasket_ReturnsTheBasketId()
+        public void AddBasket_NullBasket_CreatesABasketAndReturnsTheBasketWithAnId()
+        {
+            var basket = controller.AddBasket(null);
+
+            Assert.IsType<Guid>(basket.Id);
+        }
+
+        [Fact]
+        public void AddBasket_ReturnsTheBasketWithAnId()
         {
             IProduct fakeButter = new Product
             {
@@ -38,7 +46,10 @@
 
             basket.Items.Add(fakeButter);
 
-            Assert.IsType<Guid>(controller.AddBasket(basket));
+            var result = controller.AddBasket(basket);
+
+            Assert.Same(fakeButter, result.Items[0]);
+            Assert.IsType<Guid>(result.Id);
         }
 
         [Fact]

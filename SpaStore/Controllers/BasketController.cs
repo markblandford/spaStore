@@ -21,11 +21,18 @@
 
         /// <summary> Add a basket. </summary>
         /// <param name="basket"> The basket to add for pricing. </param>
-        /// <returns> The ID of the basket. </returns>
+        /// <returns> The basket with an Id added or updated. </returns>
         [HttpPost("basket")]
-        public Guid AddBasket([FromBody] IBasket basket)
+        public IBasket AddBasket([FromBody] IBasket basket)
         {
-            return basketCalculator.AddBasket(basket);
+            if (basket == null)
+            {
+                basket = new Basket();
+            }
+
+            basketCalculator.AddBasket(basket);
+
+            return basket;
         }
 
         /// <summary> Get the price of a basket. </summary>
