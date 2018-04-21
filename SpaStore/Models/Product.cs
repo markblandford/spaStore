@@ -1,5 +1,6 @@
 ﻿namespace SpaStore.Models
 {
+    /// <summary> A store product. </summary>
     public class Product : IProduct
     {
         /// <inheritdoc />

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
 
+    /// <summary> The interface for an offer. </summary>
     public interface IOffer
     {
         /// <summary> Unique Id of the offer. </summary>
