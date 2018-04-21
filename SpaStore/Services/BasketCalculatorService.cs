@@ -1,5 +1,6 @@
 ﻿namespace SpaStore.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Models;
@@ -7,6 +8,21 @@
     /// <summary> The service to calculate the value of a basket of products. </summary>
     public class BasketCalculatorService : IBasketCalculatorService
     {
+        /// <summary> Constructor. </summary>
+        public BasketCalculatorService()
+        {
+            Baskets = new List<IBasket>();
+        }
+
+        /// <inheritdoc />
+        public IList<IBasket> Baskets { get; set; }
+
+        /// <inheritdoc />
+        public Guid AddBasket(IBasket basket)
+        {
+            throw new System.NotImplementedException();
+        }
+
         /// <inheritdoc />
         public decimal CalculateBasketPrice(IBasket basket)
         {
