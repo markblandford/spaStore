@@ -1,19 +1,22 @@
 ﻿namespace SpaStore.Controllers
 {
     using System;
+    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using Services;
+    using Utils;
 
     /// <summary> Basket controller. </summary>
     public class BasketController : Controller
     {
-        private IBasketCalculatorService basketCalculator;
+        private readonly IBasketCalculatorService basketCalculator;
 
         /// <summary> Constructor. </summary>
-        public BasketController()
+        /// <param name="basketCalculatorService"> injected service. </param>
+        public BasketController(IBasketCalculatorService basketCalculatorService)
         {
-            basketCalculator = new BasketCalculatorService();
+            basketCalculator = basketCalculatorService;
         }
 
         /// <summary> Add a basket. </summary>
@@ -22,7 +25,7 @@
         [HttpPost("basket")]
         public Guid AddBasket([FromBody] IBasket basket)
         {
-            throw new NotImplementedException();
+            return basketCalculator.AddBasket(basket);
         }
 
         /// <summary> Get the price of a basket. </summary>
@@ -32,7 +35,14 @@
         [HttpGet("basket/{basketId}")]
         public decimal GetBasketPrice([FromRoute] Guid basketId)
         {
-            throw new NotImplementedException();
+            IBasket basket = basketCalculator.Baskets.SingleOrDefault(b => b.Id == basketId);
+
+            if (basket == null)
+            {
+                Respond.NotFound();
+            }
+
+            return basketCalculator.CalculateBasketPrice(basket);
         }
     }
 }

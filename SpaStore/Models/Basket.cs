@@ -10,7 +10,6 @@
         public Basket()
         {
             Items = new List<IProduct>();
-            Guid.NewGuid();
         }
 
         /// <inheritdoc />

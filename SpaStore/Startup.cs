@@ -5,6 +5,8 @@ namespace SpaStore
     using Microsoft.AspNetCore.SpaServices.Webpack;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Services;
+    using Utils;
 
     /// <summary> Startup. </summary>
     public class Startup
@@ -23,6 +25,14 @@ namespace SpaStore
         /// <param name="services"> services. </param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IBasketCalculatorService, BasketCalculatorService>();
+
+            // Add framework services.
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(ActionResultExceptionFilter));
+            });
+
             services.AddMvc();
         }
 
