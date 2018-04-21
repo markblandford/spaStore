@@ -49,6 +49,10 @@
         {
             IBasket basket = new Basket();
 
+            basket.Items.Add(fakeButter);
+            basket.Items.Add(fakeMilk);
+            basket.Items.Add(fakeBread);
+
             BasketCalculatorService calculator = new BasketCalculatorService();
 
             Assert.Equal(2.95m, calculator.CalculateBasketPrice(basket));
@@ -58,6 +62,11 @@
         public void CalculateBasketPrice_BasketHasTwoButterAndTwoBread_ReturnsCorrectTotalAfterOffer()
         {
             IBasket basket = new Basket();
+
+            basket.Items.Add(fakeButter);
+            basket.Items.Add(fakeButter);
+            basket.Items.Add(fakeBread);
+            basket.Items.Add(fakeBread);
 
             BasketCalculatorService calculator = new BasketCalculatorService();
 
@@ -69,6 +78,11 @@
         {
             IBasket basket = new Basket();
 
+            basket.Items.Add(fakeMilk);
+            basket.Items.Add(fakeMilk);
+            basket.Items.Add(fakeMilk);
+            basket.Items.Add(fakeMilk);
+
             BasketCalculatorService calculator = new BasketCalculatorService();
 
             Assert.Equal(3.45m, calculator.CalculateBasketPrice(basket));
@@ -78,6 +92,18 @@
         public void CalculateBasketPrice_BasketHasTwoButterOneBreadAndEightMilk_ReturnsCorrectTotalAfterOffer()
         {
             IBasket basket = new Basket();
+
+            basket.Items.Add(fakeButter);
+            basket.Items.Add(fakeButter);
+            basket.Items.Add(fakeBread);
+            basket.Items.Add(fakeMilk);
+            basket.Items.Add(fakeMilk);
+            basket.Items.Add(fakeMilk);
+            basket.Items.Add(fakeMilk);
+            basket.Items.Add(fakeMilk);
+            basket.Items.Add(fakeMilk);
+            basket.Items.Add(fakeMilk);
+            basket.Items.Add(fakeMilk);
 
             BasketCalculatorService calculator = new BasketCalculatorService();
 
