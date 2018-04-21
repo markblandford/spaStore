@@ -1,5 +1,6 @@
 ﻿namespace SpaStore.Models
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary> The interface for an offer. </summary>
@@ -7,6 +8,9 @@
     {
         /// <summary> Unique Id of the offer. </summary>
         int Id { get; }
+
+        /// <summary> The rules of the offer. </summary>
+        IList<Tuple<int, int>> OfferRules { get; }
 
         /// <summary> Items added to the offer. </summary>
         IList<IProduct> ProductsInOffer { get; set; }
