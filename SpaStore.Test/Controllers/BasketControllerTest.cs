@@ -1,15 +1,29 @@
 ﻿namespace SpaStore.Test.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
     using NSubstitute;
+    using NSubstitute.ReturnsExtensions;
     using SpaStore.Controllers;
     using SpaStore.Models;
     using SpaStore.Services;
+    using Utils;
     using Xunit;
 
     public class BasketControllerTest
     {
+        private IBasketCalculatorService fakeService;
+        private BasketController controller;
+
+        public BasketControllerTest()
+        {
+            fakeService = Substitute.For<IBasketCalculatorService>();
+
+            controller = new BasketController(fakeService);
+        }
+
         [Fact]
         public void AddBasket_ReturnsTheBasketId()
         {
@@ -24,8 +38,6 @@
 
             basket.Items.Add(fakeButter);
 
-            BasketController controller = new BasketController();
-
             Assert.IsType<Guid>(controller.AddBasket(basket));
         }
 
@@ -34,23 +46,10 @@
         {
             Guid guid = Guid.NewGuid();
 
-            var mockController = Substitute.For<BasketController>();
-            mockController.AddBasket(Arg.Any<IBasket>()).Returns(guid);
+            IBasket basket = new Basket { Id = guid };
+            fakeService.Baskets = new List<IBasket> { basket };
 
-            IProduct fakeButter = new Product
-            {
-                Id = 1,
-                Name = "Butter",
-                Price = 0.8m
-            };
-
-            IBasket basket = new Basket();
-
-            basket.Items.Add(fakeButter);
-
-            BasketController controller = new BasketController();
-
-            controller.AddBasket(basket);
+            fakeService.CalculateBasketPrice(basket).Returns(0.8m);
 
             var result = controller.GetBasketPrice(guid);
 
@@ -58,13 +57,13 @@
         }
 
         [Fact]
-        public void GetBasketPrice_InvalidBasketId_Returns404()
+        public void GetBasketPrice_InvalidBasketId_ThrowsException()
         {
-            BasketController controller = new BasketController();
+            fakeService.Baskets = new List<IBasket>();
 
-            var exception = controller.GetBasketPrice(Guid.NewGuid());
+            ActionResultException exception = Assert.Throws<ActionResultException>(() => controller.GetBasketPrice(Guid.NewGuid()));
 
-            Assert.IsType<NotFoundResult>(exception);
+            Assert.IsType<NotFoundResult>(exception.Result);
         }
     }
 }
