@@ -18,12 +18,12 @@
         public IList<IBasket> Baskets { get; set; }
 
         /// <inheritdoc />
-        public Guid AddBasket(IBasket basket)
+        public IBasket AddBasket(IBasket basket)
         {
             basket.Id = Guid.NewGuid();
             Baskets.Add(basket);
 
-            return basket.Id;
+            return basket;
         }
 
         /// <inheritdoc />

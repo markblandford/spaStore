@@ -12,8 +12,8 @@
 
         /// <summary> Add a basket. </summary>
         /// <param name="basket"> The basket to add. </param>
-        /// <returns> The Id of the basket. </returns>
-        Guid AddBasket(IBasket basket);
+        /// <returns> The basket. </returns>
+        IBasket AddBasket(IBasket basket);
 
         /// <summary> Calculate the total value of a basket. </summary>
         /// <param name="basket"> The basket to calculate the total for. </param>
