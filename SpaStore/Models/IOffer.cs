@@ -21,8 +21,10 @@
         /// <summary> The price for the offer. </summary>
         decimal OfferPrice { get; }
 
+        /// <summary> Check whether the rules for the order have been met, setting whether it has been satisfied. </summary>
+        void CheckOfferConditions();
+
         /// <summary> Whether the rule of the offer has been met. </summary>
-        /// <returns> True if the terms of the offer has been met. </returns>
-        bool OfferSatisfied();
+        bool OfferSatisfied { get; }
     }
 }
