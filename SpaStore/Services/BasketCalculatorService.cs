@@ -20,7 +20,10 @@
         /// <inheritdoc />
         public Guid AddBasket(IBasket basket)
         {
-            throw new System.NotImplementedException();
+            basket.Id = Guid.NewGuid();
+            Baskets.Add(basket);
+
+            return basket.Id;
         }
 
         /// <inheritdoc />
