@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Code Analsis Rules" Description="Microsoft code analysis and StyleCop rules" ToolsVersion="15.0">
+  <Include Path="store.ruleset" Action="Default" />
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA1652" Action="None" />
+    <Rule Id="SA1402" Action="None" />
+  </Rules>
+</RuleSet>

@@ -5,6 +5,7 @@
     using System.Linq;
     using Models;
 
+    /// <summary> The service to calculate the value of a basket of products. </summary>
     public class BasketCalculatorService : IBasketCalculatorService
     {
         /// <inheritdoc />

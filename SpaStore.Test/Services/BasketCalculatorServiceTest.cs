@@ -1,21 +1,17 @@
 ﻿namespace SpaStore.Test.Services
 {
-    using System;
     using Models;
     using SpaStore.Services;
     using Xunit;
 
     public class BasketCalculatorServiceTest
     {
-        private BasketCalculatorService calculator;
         private IProduct fakeButter;
         private IProduct fakeMilk;
         private IProduct fakeBread;
 
         public BasketCalculatorServiceTest()
         {
-            calculator = new BasketCalculatorService();
-
             fakeButter = new Product
             {
                 Id = 1,
@@ -43,30 +39,49 @@
         {
             IBasket basket = new Basket();
 
+            BasketCalculatorService calculator = new BasketCalculatorService();
+
             Assert.Equal(0m, calculator.CalculateBasketPrice(basket));
         }
 
         [Fact]
         public void CalculateBasketPrice_BasketHasOneOfEachProduct_ReturnsCorrectTotal()
         {
-            throw new NotImplementedException();
+            IBasket basket = new Basket();
+
+            BasketCalculatorService calculator = new BasketCalculatorService();
+
+            Assert.Equal(2.95m, calculator.CalculateBasketPrice(basket));
         }
 
         [Fact]
         public void CalculateBasketPrice_BasketHasTwoButterAndTwoBread_ReturnsCorrectTotalAfterOffer()
         {
-            throw new NotImplementedException();
+            IBasket basket = new Basket();
+
+            BasketCalculatorService calculator = new BasketCalculatorService();
+
+            Assert.Equal(3.1m, calculator.CalculateBasketPrice(basket));
         }
 
         [Fact]
         public void CalculateBasketPrice_BasketHasFourMilk_ReturnsCorrectTotalAfterOffer()
         {
-            throw new NotImplementedException();
+            IBasket basket = new Basket();
+
+            BasketCalculatorService calculator = new BasketCalculatorService();
+
+            Assert.Equal(3.45m, calculator.CalculateBasketPrice(basket));
         }
 
         [Fact]
         public void CalculateBasketPrice_BasketHasTwoButterOneBreadAndEightMilk_ReturnsCorrectTotalAfterOffer()
         {
-            throw new NotImplementedException();
+            IBasket basket = new Basket();
+
+            BasketCalculatorService calculator = new BasketCalculatorService();
+
+            Assert.Equal(9m, calculator.CalculateBasketPrice(basket));
         }
     }
+}
