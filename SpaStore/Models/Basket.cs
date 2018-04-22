@@ -9,13 +9,13 @@
         /// <summary> Constructor. </summary>
         public Basket()
         {
-            Items = new List<IProduct>();
+            Items = new List<Product>();
         }
 
         /// <inheritdoc />
         public Guid? Id { get; set; }
 
         /// <inheritdoc />
-        public IList<IProduct> Items { get; }
+        public IList<Product> Items { get; }
     }
 }

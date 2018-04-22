@@ -1,6 +1,7 @@
 ﻿namespace SpaStore.Test.Services
 {
     using System;
+    using System.Collections.Generic;
     using Models;
     using NSubstitute;
     using SpaStore.Models;
@@ -9,12 +10,16 @@
 
     public class BasketCalculatorServiceTest
     {
-        private readonly IProduct fakeButter;
-        private readonly IProduct fakeMilk;
-        private readonly IProduct fakeBread;
+        private readonly IProductService fakeProductService;
+        private readonly Product fakeButter;
+        private readonly Product fakeMilk;
+        private readonly Product fakeBread;
 
         public BasketCalculatorServiceTest()
         {
+            fakeProductService = Substitute.For<IProductService>();
+            fakeProductService.GetProducts().ReturnsForAnyArgs(new List<Product>());
+
             fakeButter = new Product
             {
                 Id = 1,
@@ -38,11 +43,31 @@
         }
 
         [Fact]
+        public void CalculateBasketPrice_ItemPriceHasBeenTamperedWith_BasketIsRecertifiedAndPriceCorrected()
+        {
+            IBasket basket = new Basket();
+
+            Product forgedButter = new Product
+            {
+                Id = 1,
+                Name = "Butter",
+                Price = 0.8m
+            };
+            basket.Items.Add(forgedButter);
+
+            fakeProductService.GetProducts().ReturnsForAnyArgs(new List<Product> { fakeButter });
+
+            IBasketCalculatorService calculator = new BasketCalculatorService(fakeProductService);
+
+            Assert.Equal(0.8m, calculator.CalculateBasketPrice(basket));
+        }
+
+        [Fact]
         public void CalculateBasketPrice_BasketIsEmpty_ReturnsZero()
         {
             IBasket basket = new Basket();
 
-            IBasketCalculatorService calculator = new BasketCalculatorService();
+            IBasketCalculatorService calculator = new BasketCalculatorService(fakeProductService);
 
             Assert.Equal(0m, calculator.CalculateBasketPrice(basket));
         }
@@ -56,7 +81,7 @@
             basket.Items.Add(fakeMilk);
             basket.Items.Add(fakeBread);
 
-            IBasketCalculatorService calculator = new BasketCalculatorService();
+            IBasketCalculatorService calculator = new BasketCalculatorService(fakeProductService);
 
             Assert.Equal(2.95m, calculator.CalculateBasketPrice(basket));
         }
@@ -71,7 +96,7 @@
             basket.Items.Add(fakeBread);
             basket.Items.Add(fakeBread);
 
-            IBasketCalculatorService calculator = new BasketCalculatorService();
+            IBasketCalculatorService calculator = new BasketCalculatorService(fakeProductService);
 
             Assert.Equal(3.1m, calculator.CalculateBasketPrice(basket));
         }
@@ -86,7 +111,7 @@
             basket.Items.Add(fakeMilk);
             basket.Items.Add(fakeMilk);
 
-            IBasketCalculatorService calculator = new BasketCalculatorService();
+            IBasketCalculatorService calculator = new BasketCalculatorService(fakeProductService);
 
             Assert.Equal(3.45m, calculator.CalculateBasketPrice(basket));
         }
@@ -108,7 +133,7 @@
             basket.Items.Add(fakeMilk);
             basket.Items.Add(fakeMilk);
 
-            IBasketCalculatorService calculator = new BasketCalculatorService();
+            IBasketCalculatorService calculator = new BasketCalculatorService(fakeProductService);
 
             Assert.Equal(9m, calculator.CalculateBasketPrice(basket));
         }
@@ -119,7 +144,7 @@
             IBasket basket = new Basket();
             basket.Items.Add(fakeButter);
 
-            IBasketCalculatorService calculator = new BasketCalculatorService();
+            IBasketCalculatorService calculator = new BasketCalculatorService(fakeProductService);
 
             Assert.Equal(0, calculator.Baskets.Count);
 
@@ -134,7 +159,7 @@
             IBasket basket = new Basket();
             basket.Items.Add(fakeButter);
 
-            IBasketCalculatorService calculator = new BasketCalculatorService();
+            IBasketCalculatorService calculator = new BasketCalculatorService(fakeProductService);
 
             calculator.AddBasket(basket);
 

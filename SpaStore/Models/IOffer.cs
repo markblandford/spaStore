@@ -13,7 +13,7 @@
         IList<Tuple<int, int>> OfferRules { get; }
 
         /// <summary> Items added to the offer. </summary>
-        IList<IProduct> ProductsInOffer { get; set; }
+        IList<Product> ProductsInOffer { get; set; }
 
         /// <summary> The description of the offer. </summary>
         string OfferDescription { get; }

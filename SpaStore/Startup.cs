@@ -25,6 +25,7 @@ namespace SpaStore
         /// <param name="services"> services. </param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IProductService, ProductService>();
             services.AddSingleton<IBasketCalculatorService, BasketCalculatorService>();
 
             // Add framework services.
@@ -60,7 +61,7 @@ namespace SpaStore
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Basket}/{action=Index}/{id?}");
 
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
