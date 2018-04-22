@@ -1,11 +1,11 @@
-﻿
-namespace SpaStore.Controllers
+﻿namespace SpaStore.Controllers
 {
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using Services;
 
+    /// <summary> Product Controller. </summary>
     public class ProductController : Controller
     {
         private readonly IProductService productService;

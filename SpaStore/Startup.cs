@@ -60,6 +60,11 @@ namespace SpaStore
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "product",
+                    defaults: new { controller = "Product", action = "Index" },
+                    template: "product");
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Basket}/{action=Index}/{id?}");
 
