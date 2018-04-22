@@ -10,6 +10,6 @@
         Guid? Id { get; set; }
 
         /// <summary> Items within the basket. </summary>
-        IList<IProduct> Items { get; }
+        IList<Product> Items { get; }
     }
 }

@@ -19,7 +19,7 @@
                 new Tuple<int, int>(2, 4)
             };
 
-            ProductsInOffer = new List<IProduct>();
+            ProductsInOffer = new List<Product>();
         }
 
         /// <inheritdoc />
@@ -29,7 +29,7 @@
         public IList<Tuple<int, int>> OfferRules { get; }
 
         /// <inheritdoc />
-        public IList<IProduct> ProductsInOffer { get; set; }
+        public IList<Product> ProductsInOffer { get; set; }
 
         /// <inheritdoc />
         public string OfferDescription { get; }

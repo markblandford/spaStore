@@ -23,7 +23,7 @@
         /// <param name="basket"> The basket to add for pricing. </param>
         /// <returns> The basket with an Id added or updated. </returns>
         [HttpPost("basket")]
-        public IBasket AddBasket([FromBody] IBasket basket)
+        public IBasket AddBasket([FromBody] Basket basket)
         {
             if (basket == null)
             {

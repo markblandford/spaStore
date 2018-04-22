@@ -8,9 +8,13 @@
     /// <summary> The service to calculate the value of a basket of products. </summary>
     public class BasketCalculatorService : IBasketCalculatorService
     {
+        private readonly IProductService productService;
+
         /// <summary> Constructor. </summary>
-        public BasketCalculatorService()
+        /// <param name="productService"> Product service. </param>
+        public BasketCalculatorService(IProductService productService)
         {
+            this.productService = productService;
             Baskets = new List<IBasket>();
         }
 
@@ -21,9 +25,23 @@
         public IBasket AddBasket(IBasket basket)
         {
             basket.Id = Guid.NewGuid();
+
+            CertifyBasketItems(basket);
             Baskets.Add(basket);
 
             return basket;
+        }
+
+        private void CertifyBasketItems(IBasket basket)
+        {
+            IList<Product> availableProducts = productService.GetProducts();
+
+            foreach (Product basketItem in basket.Items)
+            {
+                Product found = availableProducts.FirstOrDefault(p => p.Id == basketItem.Id);
+                basketItem.Name = found?.Name ?? "NOT FOUND";
+                basketItem.Price = found?.Price ?? 0;
+            }
         }
 
         /// <inheritdoc />
@@ -59,7 +77,7 @@
             return fullPrices + offerPrices;
         }
 
-        private void ApplyOffer(IProduct item, IList<IOffer> offers, int offerId)
+        private void ApplyOffer(Product item, IList<IOffer> offers, int offerId)
         {
             IOffer openOffer = offers.FirstOrDefault(o => o.Id == offerId && !o.OfferSatisfied);
 
@@ -109,7 +127,7 @@
 
         private void RemoveInitialOrdersWithOffersApplied(IBasket basket, IList<IOffer> offers)
         {
-            IList<IProduct> productsToRemove = new List<IProduct>();
+            IList<Product> productsToRemove = new List<Product>();
 
             foreach (var offer in offers.Where(o => o.OfferSatisfied))
             {
